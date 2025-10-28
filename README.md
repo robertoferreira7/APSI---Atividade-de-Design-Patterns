@@ -1,7 +1,6 @@
 # Projeto de Design Patterns — Backend
 
 **Equipe:** Amanada, Laiane e Roberto
-
 **Repositório:** LINK_DO_REPO_AQUI  
 **Tecnologia:** Django ou Spring Boot / Laravel / Express
 
