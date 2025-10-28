@@ -1,8 +1,8 @@
 # Projeto de Design Patterns — Backend
 
-**Equipe:** NOME_DA_EQUIPE_AQUI  
+**Equipe:** Amanda, Laiane e Roberto
 **Repositório:** LINK_DO_REPO_AQUI  
-**Tecnologia:** Django (ou Spring Boot / Laravel / Express)  
+**Tecnologia:**
 
 Este repositório contém os exercícios de Design Patterns solicitados.  
 Cada exercício está isolado em uma pasta com seu próprio README.md e, quando necessário, endpoints REST e testes unitários.
@@ -17,4 +17,3 @@ Cada exercício está isolado em uma pasta com seu próprio README.md e, quando 
 - `exercise-3-strategy/` — Exercício 3.2: Strategy
 - `exercise-3-chain/` — Exercício 3.3: Chain of Responsibility
 - `exercise-3-4-template-method/` — Exercício 3.4: Template Method
-- `docs/` — Documentação adicional
