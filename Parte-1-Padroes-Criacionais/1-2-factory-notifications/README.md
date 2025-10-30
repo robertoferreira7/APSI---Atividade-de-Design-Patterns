@@ -41,6 +41,7 @@ curl -X POST [http://127.0.0.1:8000/notify/](http://127.0.0.1:8000/notify/) \
 -d '{"type": "email", "recipient": "user@example.com", "subject": "Nova Fatura", "content": "Sua fatura está pronta."}'
 
 ## Testes Unitários
+
 Arquivo: notification_app/tests.py
 
 Os testes validam a criação correta de cada objeto pela Factory e a integração da API.
