@@ -49,58 +49,58 @@ curl -X POST [http://127.0.0.1:8000/api/log/](http://127.0.0.1:8000/api/log/) \
 
 ------------------------------------------------------
 
-
-#  APSI – Parte 2.1: Padrão Estrutural – Adapter (Integração de Pagamento Legado)
-
-Equipe: [coloque o nome da equipe / integrantes aqui]
-Link do GitHub Classroom: [coloque aqui o link do repositório no classroom]
-
----
+#APSI – Parte 1.2: Padrão Criacional – Factory Method (Sistema de Notificações)
 
 ## Descrição do Problema
 
-O sistema de e-commerce moderno precisa processar pagamentos seguindo uma nova interface padrão, chamada `NewPaymentGateway`. No entanto, a infraestrutura da empresa depende de um **sistema de processamento de pagamentos legado (`LegacyPaymentProcessor`)** que é incompatível com a nova interface (diferentes nomes de métodos e formato de dados) e que **não pode ser modificado**.
-
-O desafio é fazer com que o código moderno use o sistema legado **sem alterar as classes existentes**, implementando o novo padrão no Django.
+O sistema de backend precisa enviar notificações através de múltiplos canais (E-mail, SMS, Push). O código de controle (Controller/View) não deve ter que decidir ou saber qual classe de notificação específica deve instanciar. É necessário um mecanismo que delegue a criação do objeto apropriado, mantendo o sistema aberto para novos canais no futuro.
 
 ## Solução Implementada
 
-A solução foi desenvolvida em Python e Django, aplicando o padrão **Adapter** para criar uma camada intermediária que faz a tradução bidirecional entre a interface nova (Alvo) e a classe antiga (Adaptee).
+A solução foi desenvolvida em Django, utilizando o padrão **Factory Method** para desacoplar a criação de objetos de notificação do código que os utiliza. A `NotificationFactory` é responsável por retornar o objeto de serviço correto (E-mail, SMS ou Push) com base no tipo solicitado pela API.
 
 ### Estrutura Aplicada
 
-| Papel | Implementação | Observação |
-| :--- | :--- | :--- |
-| **Alvo (Target)** | `NewPaymentGateway` (Interface/Contrato) | É o contrato que o Cliente espera usar. |
-| **Adaptee (Legado)** | `LegacyPaymentProcessor` (O sistema antigo) | Não deve ser modificado. |
-| **Adapter (Adaptador)** | `LegacyPaymentAdapter` | Classe que implementa o **Alvo** e contém uma instância do **Adaptee**, traduzindo as chamadas. |
-| **Cliente** | `PaymentView` (View do Django) | Interage apenas com o Alvo (o `LegacyPaymentAdapter`). |
-| **API REST** | `/api/pay/` (POST) | Endpoint para processar a requisição de pagamento via Adapter. |
+| Papel | Implementação |
+|-------|----------------|
+| Interface do Produto | `NotificationService` (Classe Abstrata com método `send`) |
+| Produtos Concretos | `EmailNotificationService`, `SmsNotificationService`, `PushNotificationService` |
+| Criador (Factory) | `NotificationFactory` (Implementa o método `get_notification_service`) |
+| Cliente | `send_notification` (View do Django que utiliza a Factory) |
 
-### Instruções para Execução
+## Instruções para Execução
 
-1.  Navegar para a pasta do projeto e ativar o ambiente virtual:
+1.  Navegar para a pasta e ativar o ambiente virtual:
     ```bash
-    cd 2-1-adapter-payment
-    .\venv_adapter\Scripts\activate
+    cd 1-2-factory-notifications
+    .\venv_fac\Scripts\activate
     ```
 
-2.  Migrar o banco de dados (se necessário) e rodar o servidor:
+2.  Migrar e rodar o servidor:
     ```bash
     python manage.py migrate
     python manage.py runserver
     ```
 
-3.  Execução dos Testes Unitários:
-    ```bash
-    python manage.py test payment_app
-    ```
-
 ## Testes via API (Exemplo cURL)
 
-Para testar o processamento de um pagamento (POST), que será manipulado internamente pelo Adapter:
+Para testar o envio de uma **Notificação por E-mail (POST)**, o Factory Method cria o `EmailNotificationService`:
 
 ```bash
-curl -X POST [http://127.0.0.1:8000/api/pay/](http://127.0.0.1:8000/api/pay/) \
+curl -X POST [http://127.0.0.1:8000/notify/](http://127.0.0.1:8000/notify/) \
 -H "Content-Type: application/json" \
--d '{"amount": 150.75, "card_number": "4111...", "expiry": "12/25"}'
+-d '{"type": "email", "recipient": "user@example.com", "subject": "Nova Fatura", "content": "Sua fatura está pronta."}'
+
+## Testes Unitários
+
+Arquivo: notification_app/tests.py
+
+Os testes validam a criação correta de cada objeto pela Factory e a integração da API.
+
+Executar testes:
+
+Bash
+
+python manage.py test notification_app
+Resultado esperado:
+
