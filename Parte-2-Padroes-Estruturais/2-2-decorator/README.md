@@ -32,3 +32,9 @@ Navegue para a pasta do exercício e ative o ambiente virtual:
 ```bash
 cd Parte-2-Padroes-Estruturais/2-2-decorator-export
 .\venv_decorator\Scripts\activate
+
+Executar testes:
+
+comando: python manage.py test export_app
+
+Resultado esperado: Ran 6 tests in 0.xxxs - OK
