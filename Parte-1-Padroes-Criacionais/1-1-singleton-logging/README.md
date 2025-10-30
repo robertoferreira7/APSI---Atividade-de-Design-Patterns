@@ -1,7 +1,4 @@
-# ⚙️ APSI – Parte 1.1: Padrão Criacional – Singleton
-
-Equipe: [coloque o nome da equipe / integrantes aqui]
-Link do GitHub Classroom: [coloque aqui o link do repositório no classroom]
+# APSI – Parte 1.1: Padrão Criacional – Singleton
 
 ## Descrição do Problema
 
