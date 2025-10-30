@@ -2,7 +2,7 @@
 
 **Equipe:** Amanada, Laiane e Roberto
 **Repositório:** LINK_DO_REPO_AQUI  
-**Tecnologia:** Django ou Spring Boot / Laravel / Express
+**Tecnologia:** Django
 
 Este repositório contém os exercícios de Design Patterns solicitados.  
 Cada exercício está isolado em uma pasta com seu próprio README.md e, quando necessário, endpoints REST e testes unitários.
