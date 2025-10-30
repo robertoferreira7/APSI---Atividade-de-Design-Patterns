@@ -1,7 +1,6 @@
 # Projeto de Design Patterns — Backend
 
 **Equipe:** Amanada, Laiane e Roberto
-**Repositório:** LINK_DO_REPO_AQUI  
 **Tecnologia:** Django
 
 Este repositório contém os exercícios de Design Patterns solicitados.  
