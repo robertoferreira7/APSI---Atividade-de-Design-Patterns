@@ -30,3 +30,7 @@ Navegue para a pasta do exercício e ative o ambiente virtual:
 ```bash
 cd Parte-2-Padroes-Estruturais/2-3-facade-ecommerce
 .\venv_facade\Scripts\activate
+
+Executar testes:
+
+comando: python manage.py test order_app
