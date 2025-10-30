@@ -1,0 +1,21 @@
+[project]
+name = "apsi-django-observer"
+version = "0.1.0"
+description = "Exercício 3.1 - Observer com Django Signals"
+requires-python = ">=3.12"
+dependencies = [
+  "Django>=5.0",
+  "djangorestframework>=3.15",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-django>=4.8",
+  "pytest-cov>=5.0",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "apsi.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+addopts = "-q"
