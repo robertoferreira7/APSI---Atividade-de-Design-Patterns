@@ -29,7 +29,7 @@ A solução foi construída em **Django 5 + Django REST Framework**, utilizando 
 ### Definição
 O padrão **Observer** permite que múltiplos objetos (observadores) sejam notificados automaticamente sempre que o estado de outro objeto (o sujeito) muda.
 
-### 🏗️ Aplicação no Projeto
+### Aplicação no Projeto
 | Elemento | Implementação |
 |-----------|----------------|
 | **Subject (Observable)** | `StockMarket` em `services.py` |
