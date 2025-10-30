@@ -1,6 +1,6 @@
 # Projeto de Design Patterns — Backend
 
-**Equipe:** Amanada, Laiane e Roberto
+**Equipe:** Amanda, Laiane e Roberto
 
 
 **Tecnologia:** Django
