@@ -50,7 +50,7 @@ curl -X POST [http://127.0.0.1:8000/api/log/](http://127.0.0.1:8000/api/log/) \
 ------------------------------------------------------
 
 
-# APSI – Parte 2.1: Padrão Estrutural – Adapter (Integração de Pagamento Legado)
+#  APSI – Parte 2.1: Padrão Estrutural – Adapter (Integração de Pagamento Legado)
 
 Equipe: [coloque o nome da equipe / integrantes aqui]
 Link do GitHub Classroom: [coloque aqui o link do repositório no classroom]
@@ -59,33 +59,25 @@ Link do GitHub Classroom: [coloque aqui o link do repositório no classroom]
 
 ## Descrição do Problema
 
-O sistema de e-commerce moderno precisa processar pagamentos usando uma nova interface padrão (`NewPaymentGateway`). No entanto, o backend da empresa ainda depende de um **sistema de processamento de pagamentos legado (`LegacyPaymentProcessor`)** que não pode ser modificado e que possui métodos e formatos de dados incompatíveis.
+O sistema de e-commerce moderno precisa processar pagamentos seguindo uma nova interface padrão, chamada `NewPaymentGateway`. No entanto, a infraestrutura da empresa depende de um **sistema de processamento de pagamentos legado (`LegacyPaymentProcessor`)** que é incompatível com a nova interface (diferentes nomes de métodos e formato de dados) e que **não pode ser modificado**.
 
-O desafio é fazer com que o código moderno use o sistema legado **sem alterar nenhuma das suas classes**.
+O desafio é fazer com que o código moderno use o sistema legado **sem alterar as classes existentes**, implementando o novo padrão no Django.
 
 ## Solução Implementada
 
-A solução foi desenvolvida em Django, utilizando o padrão **Adapter** para criar uma camada intermediária que traduz a interface do sistema legado para a interface esperada pelo cliente moderno.
+A solução foi desenvolvida em Python e Django, aplicando o padrão **Adapter** para criar uma camada intermediária que faz a tradução bidirecional entre a interface nova (Alvo) e a classe antiga (Adaptee).
 
 ### Estrutura Aplicada
 
-| Papel | Implementação |
-| :--- | :--- |
-| **Alvo (Target)** | `NewPaymentGateway` (Interface moderna que o cliente espera) |
-| **Cliente** | `PaymentView` (O código que processa o pagamento via a interface Alvo) |
-| **Adaptee (Incompatível)** | `LegacyPaymentProcessor` (A classe Legada/Incompatível) |
-| **Adapter (Adaptador)** | `LegacyPaymentAdapter` (A classe que implementa o Alvo e traduz as chamadas para o Adaptee) |
-| **API REST (Endpoint)** | `/api/pay/` (POST para processar o pagamento) |
+| Papel | Implementação | Observação |
+| :--- | :--- | :--- |
+| **Alvo (Target)** | `NewPaymentGateway` (Interface/Contrato) | É o contrato que o Cliente espera usar. |
+| **Adaptee (Legado)** | `LegacyPaymentProcessor` (O sistema antigo) | Não deve ser modificado. |
+| **Adapter (Adaptador)** | `LegacyPaymentAdapter` | Classe que implementa o **Alvo** e contém uma instância do **Adaptee**, traduzindo as chamadas. |
+| **Cliente** | `PaymentView` (View do Django) | Interage apenas com o Alvo (o `LegacyPaymentAdapter`). |
+| **API REST** | `/api/pay/` (POST) | Endpoint para processar a requisição de pagamento via Adapter. |
 
-### Justificativa e Benefícios
-
-* **Reuso de Código Legado:** Permite reutilizar a lógica de um sistema antigo (`LegacyPaymentProcessor`) sem a necessidade de reescrevê-lo, economizando tempo e garantindo a estabilidade.
-* **Decoupling:** O Cliente (a View) permanece totalmente desacoplado do sistema legado. Ele interage apenas com a interface padrão (`NewPaymentGateway`).
-* **Flexibilidade:** Se o sistema legado for substituído no futuro, basta criar um novo Adaptador ou um novo Gateway, sem modificar o Cliente.
-
----
-
-## Instruções para Execução
+### Instruções para Execução
 
 1.  Navegar para a pasta do projeto e ativar o ambiente virtual:
     ```bash
@@ -93,19 +85,20 @@ A solução foi desenvolvida em Django, utilizando o padrão **Adapter** para cr
     .\venv_adapter\Scripts\activate
     ```
 
-2.  Execução dos Testes Unitários:
+2.  Migrar o banco de dados (se necessário) e rodar o servidor:
+    ```bash
+    python manage.py migrate
+    python manage.py runserver
+    ```
+
+3.  Execução dos Testes Unitários:
     ```bash
     python manage.py test payment_app
     ```
 
-3.  Iniciar o Servidor (para teste manual):
-    ```bash
-    python manage.py runserver
-    ```
-
 ## Testes via API (Exemplo cURL)
 
-Para processar um pagamento (POST) usando o Adapter:
+Para testar o processamento de um pagamento (POST), que será manipulado internamente pelo Adapter:
 
 ```bash
 curl -X POST [http://127.0.0.1:8000/api/pay/](http://127.0.0.1:8000/api/pay/) \
