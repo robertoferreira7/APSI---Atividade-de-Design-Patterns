@@ -1,5 +1,5 @@
 
-## 📋 Descrição do Problema
+## Descrição do Problema
 
 Um sistema de **monitoramento de mercado financeiro** deve permitir que usuários se inscrevam para receber **alertas sobre mudanças no preço de ações** específicas.  
 Quando uma ação muda de valor, todos os observadores interessados precisam ser notificados automaticamente.
@@ -11,11 +11,11 @@ O desafio é criar um backend capaz de:
 
 ---
 
-## 💡 Solução Implementada
+## Solução Implementada
 
 A solução foi construída em **Django 5 + Django REST Framework**, utilizando **Django Signals** para implementar o padrão **Observer**.
 
-### 🎯 Fluxo geral:
+### Fluxo geral:
 
 1. O usuário inscreve um observador (ex.: SMS, Email, Dashboard) para um determinado símbolo (ex.: `PETR4`).  
 2. O `StockMarket` (Subject) atualiza o preço e emite o sinal `price_changed`.  
@@ -24,9 +24,9 @@ A solução foi construída em **Django 5 + Django REST Framework**, utilizando 
 
 ---
 
-## 🧩 Padrão Aplicado: Observer
+## Padrão Aplicado: Observer
 
-### 📘 Definição
+### Definição
 O padrão **Observer** permite que múltiplos objetos (observadores) sejam notificados automaticamente sempre que o estado de outro objeto (o sujeito) muda.
 
 ### 🏗️ Aplicação no Projeto
@@ -43,9 +43,9 @@ Os *signals* do Django funcionam como um sistema de “eventos e ouvintes” nat
 
 ---
 
-## ⚙️ Instruções para Executar o Projeto
+## Instruções para Executar o Projeto
 
-### 1️⃣ Clonar e preparar o ambiente
+### Clonar e preparar o ambiente
 ```bash
 git clone <link-do-seu-repositorio>
 cd apsi-observer
@@ -53,37 +53,37 @@ python -m venv .venv
 source .venv/bin/activate  # (Windows: .venv\Scripts\activate)
 ```
 
-### 2️⃣ Instalar dependências
+### Instalar dependências
 ```bash
 pip install -e .[dev]
 ```
 
-### 3️⃣ Migrar e iniciar o servidor
+### Migrar e iniciar o servidor
 ```bash
 python manage.py migrate
 python manage.py runserver
 ```
 
-### 4️⃣ Testar os endpoints
+### Testar os endpoints
 
-#### ➕ Inscrever observador
+#### Inscrever observador
 ```bash
 curl -X POST http://localhost:8000/api/observer/subscribe   -H "Content-Type: application/json"   -d '{"symbol":"PETR4","type":"sms"}'
 ```
 
-#### 📈 Atualizar preço
+#### Atualizar preço
 ```bash
 curl -X POST http://localhost:8000/api/observer/price   -H "Content-Type: application/json"   -d '{"symbol":"PETR4","price":39.7}'
 ```
 
-#### ➖ Remover observador
+#### Remover observador
 ```bash
 curl -X POST http://localhost:8000/api/observer/unsubscribe   -H "Content-Type: application/json"   -d '{"symbol":"PETR4","type":"sms"}'
 ```
 
 ---
 
-## 🧪 Testes Unitários
+## Testes Unitários
 
 Os testes estão em `observer/tests.py` e usam `pytest-django` com `APIClient`.
 
@@ -97,9 +97,11 @@ class TestObserverSignals:
         assert c.post("/api/observer/unsubscribe", {"symbol": "PETR4", "type": "dash"}, format="json").status_code == 200
 ```
 
-### 🔍 Como rodar os testes
+### Como rodar os testes
 ```bash
 pytest -v --maxfail=1 --disable-warnings
 ```
+## Conclusão
 
----
+O projeto demonstra o uso do padrão **Observer** dentro do ecossistema Django de forma simples e funcional. 
+
